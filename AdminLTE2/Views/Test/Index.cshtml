@@ -1,0 +1,45 @@
+﻿
+@{
+    ViewBag.Title = "Index";
+}
+
+<div class="form-group">
+    <label>Parameter</label>
+    <input type="text" id="parameter" class="form-control" placeholder="Parameter ...">
+</div>
+
+<div class="form-group">
+    <label>Formula</label>
+    <input type="text" id="formula" class="form-control" placeholder="Formula ...">
+</div>
+<p>< a   works</p>
+<p>&lt;a    not works </p>
+<button class="btn btn-primary" onclick="letsGo()">Go!</button>
+
+@section ViewSpecificJavascript{
+    <script>
+
+        function letsGo() {
+            debugger;
+            var parameter = $('#parameter').val();
+            var formula = $('#formula').val();
+            var url = `@Url.Action("LetsGo", "Test")`;
+            var obj = {
+                Parameter: parameter,
+                Formula: formula
+            }
+            $.ajax({
+                type: "POST",
+                url: url,
+                data: obj,
+                dataType: "json",
+                success: function (response) {
+                    alert(JSON.stringify(response.data));
+                }, error: function (xhr, ajaxOptions, thrownError) {
+                    alert(xhr.status);
+                    alert(thrownError);
+                }
+            });
+        };
+    </script>
+}
